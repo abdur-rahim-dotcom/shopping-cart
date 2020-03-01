@@ -1,6 +1,6 @@
 //iPhone Plus Event Handler
 const targetIphonePlus = document.getElementById("iphone-plus");
-targetIphonePlus.addEventListener("click", function() {
+targetIphonePlus.addEventListener("click", function () {
   //iPhone count and price
   const totalProduct = productCount("iphone-count");
   document.getElementById("iphone-count").value = totalProduct;
@@ -20,7 +20,7 @@ targetIphonePlus.addEventListener("click", function() {
 
 //iPhone minus event handler
 const targetIphoneMinus = document.getElementById("iphone-minus");
-targetIphoneMinus.addEventListener("click", function() {
+targetIphoneMinus.addEventListener("click", function () {
   //iPhone count and price
   const productCount = productSubtract("iphone-count");
   document.getElementById("iphone-count").value = productCount;
@@ -28,32 +28,14 @@ targetIphoneMinus.addEventListener("click", function() {
   document.getElementById("iphone-price").innerText = iphonePrice;
   // logic
   if (productCount <= 0) {
-    document.getElementById("iphone-count").value = 0;
-    document.getElementById("iphone-price").innerText = 0;
-    const casingPrice = selectOtherPrice("casing-price");
-    // subtotal price
-    const subtotal = (document.getElementById(
-      "subtotal"
-    ).innerText = casingPrice);
-    // tax
-    const tax = (casingPrice / 100) * 16;
-    document.getElementById("tax").innerText = tax;
-    //total price
-    document.getElementById("total").innerText = subtotal + tax;
+    conditionIf("iphone-count", "iphone-price", "casing-price", "subtotal", "tax", "total")
   } else {
-    // subtotal price
-    const subtotal = productPriceSubtract("subtotal", 1278);
-    document.getElementById("subtotal").innerText = subtotal;
-    // tax
-    const tax = (subtotal / 100) * 16;
-    document.getElementById("tax").innerText = tax;
-    //total price
-    document.getElementById("total").innerText = subtotal + tax;
+    conditionElse("subtotal", "tax", "total", 1278);
   }
 });
 //casing Plus Event Handler
 const targetCasingPlus = document.getElementById("casing-plus");
-targetCasingPlus.addEventListener("click", function() {
+targetCasingPlus.addEventListener("click", function () {
   //iPhone count and price
   const totalProduct = productCount("casing-count");
   document.getElementById("casing-count").value = totalProduct;
@@ -72,7 +54,7 @@ targetCasingPlus.addEventListener("click", function() {
 });
 //casing minus event handler
 const targetCasingMinus = document.getElementById("casing-minus");
-targetCasingMinus.addEventListener("click", function() {
+targetCasingMinus.addEventListener("click", function () {
   //product count and price
   const productCount = productSubtract("casing-count");
   document.getElementById("casing-count").value = productCount;
@@ -80,27 +62,9 @@ targetCasingMinus.addEventListener("click", function() {
   document.getElementById("casing-price").innerText = casingPrice;
   // logic
   if (productCount <= 0) {
-    document.getElementById("casing-count").value = 0;
-    document.getElementById("casing-price").innerText = 0;
-    const iphonePrice = selectOtherPrice("iphone-price");
-    // subtotal price
-    const subtotal = (document.getElementById(
-      "subtotal"
-    ).innerText = iphonePrice);
-    // tax
-    const tax = (iphonePrice / 100) * 16;
-    document.getElementById("tax").innerText = tax;
-    //total price
-    document.getElementById("total").innerText = subtotal + tax;
+    conditionIf("casing-count", "casing-price", "iphone-price", "subtotal", "tax", "total")
   } else {
-    // subtotal price
-    const subtotal = productPriceSubtract("subtotal", 59);
-    document.getElementById("subtotal").innerText = subtotal;
-    // tax
-    const tax = (subtotal / 100) * 16;
-    document.getElementById("tax").innerText = tax;
-    //total price
-    document.getElementById("total").innerText = subtotal + tax;
+    conditionElse("subtotal", "tax", "total", 59);
   }
 });
 // function
@@ -108,7 +72,6 @@ function productCount(id) {
   const productCount = document.getElementById(id).value;
   const productCountNumber = parseInt(productCount);
   const totalProduct = productCountNumber + 1;
-  // document.getElementById(id).value = totalProduct;
   return totalProduct;
 }
 function selectOtherPrice(id) {
@@ -135,3 +98,46 @@ function productPriceSubtract(id, price) {
   const totalPrice = totalNumber - price;
   return totalPrice;
 }
+function conditionIf(countId, priceZeroId, otherPriceId, subtotalId, taxId, totalId) {
+  document.getElementById(countId).value = 0;
+  document.getElementById(priceZeroId).innerText = 0;
+  const iphonePrice = selectOtherPrice(otherPriceId);
+  const subtotal = (document.getElementById(
+    subtotalId
+  ).innerText = iphonePrice);
+  const tax = (iphonePrice / 100) * 16;
+  document.getElementById(taxId).innerText = tax;
+  document.getElementById(totalId).innerText = subtotal + tax;
+}
+function conditionElse(subtotalId, taxId, totalId, price) {
+  const subtotal = productPriceSubtract(subtotalId, price);
+  document.getElementById(subtotalId).innerText = subtotal;
+  const tax = (subtotal / 100) * 16;
+  document.getElementById(taxId).innerText = tax;
+  document.getElementById(totalId).innerText = subtotal + tax;
+}
+const favoriteIcon = document.getElementById("favorite1");
+favoriteIcon.addEventListener("click", function () {
+  document.getElementById("favorite1").src = "images/star-full.png";
+})
+const favoriteIcon2 = document.getElementById("favorite2");
+favoriteIcon2.addEventListener("click", function () {
+  document.getElementById("favorite2").src = "images/star-full.png";
+})
+
+
+// work with remove image
+// const removeImage = document.getElementById("remove");
+// removeImage.addEventListener("click", function () {
+//   removeEverything("iphone-count", "iphone-price");
+//   const iphonePrice = document.getElementById("iphone-price")
+//   document.getElementById("subtotal").innerText - iphonePrice;
+// });
+
+// function removeEverything(id, id2) {
+//   const quantity = (document.getElementById(id).value = 0);
+//   const price = (document.getElementById(id2).innerText = 0);
+
+// }
+
+
